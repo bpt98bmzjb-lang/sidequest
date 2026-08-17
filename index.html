@@ -27,7 +27,7 @@
   --dev:0;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:hidden}
 body{background:var(--lacquer);color:var(--champagne);font-family:var(--body);line-height:1.65;overflow-x:hidden}
 
 /* House light — swells as the lights come up */
@@ -170,7 +170,7 @@ body.dev{padding-bottom:100px}
 
 /* ─── Stage ─── */
 .develop{height:265svh;position:relative}
-.stage{position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center;padding:0 26px}
+.stage{position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center;padding:0 26px;overflow:hidden}
 
 /* Brass sunburst behind the panel */
 .burst{position:absolute;width:min(150vw,1000px);height:min(150vw,1000px);pointer-events:none;
@@ -268,7 +268,7 @@ body.dev{padding-bottom:100px}
 .plate{padding:96px 0 40px;text-align:center}
 .plate-frame{margin:26px auto 0;max-width:430px;position:relative}
 #plate-canvas{width:100%;height:auto;display:block;border:1px solid var(--edge);
-  background:var(--velvet);aspect-ratio:4/5}
+  background:var(--velvet)}
 .plate-empty{position:absolute;inset:0;display:flex;flex-direction:column;
   align-items:center;justify-content:center;gap:14px;
   background:none;border:0;padding:0;cursor:pointer;font:inherit;
@@ -1135,12 +1135,22 @@ function spaced(text, x, y, px){
   cx.restore();
 }
 
+const TOP = 214, BOTTOM = 330, MARGIN = 76;
+
+function sizePlate(){
+  const w = 1080 - MARGIN * 2;
+  const ratio = shot ? shot.height / shot.width : 3 / 4;      // 4:3 landscape by default
+  const h = Math.round(Math.min(1.45, Math.max(0.55, ratio)) * w);
+  cv.width = 1080;
+  cv.height = TOP + h + BOTTOM;
+  return { x: MARGIN, y: TOP, w, h };
+}
+
 function drawPlate(){
+  const win = sizePlate();
   const W = cv.width, H = cv.height;
   cx.fillStyle = C.lacquer; cx.fillRect(0, 0, W, H);
   cx.textAlign = "center"; cx.textBaseline = "alphabetic";
-
-  const win = { x:76, y:214, w:928, h:812 };
 
   if (shot){
     const r = Math.max(win.w / shot.width, win.h / shot.height);
@@ -1169,18 +1179,19 @@ function drawPlate(){
     viewDate.toLocaleDateString(undefined,{day:"numeric",month:"long"}).toUpperCase(), W/2, 168, 7);
 
   /* codename */
+  const base = win.y + win.h;
   cx.fillStyle = C.champagne; cx.font = "400 66px 'Bodoni Moda', Didot, serif";
-  spaced(p.code.toUpperCase(), W/2, 1130, 4);
+  spaced(p.code.toUpperCase(), W/2, base + 104, 4);
 
   /* tail */
   cx.fillStyle = C.brass; cx.font = "italic 400 36px 'Bodoni Moda', Didot, serif";
-  cx.fillText(p.tail, W/2, 1188);
+  cx.fillText(p.tail, W/2, base + 162);
 
   /* rule + diamond */
   cx.strokeStyle = C.edge; cx.lineWidth = 1;
-  cx.beginPath(); cx.moveTo(300, 1246); cx.lineTo(500, 1246);
-  cx.moveTo(580, 1246); cx.lineTo(780, 1246); cx.stroke();
-  cx.save(); cx.translate(540, 1246); cx.rotate(Math.PI/4);
+  cx.beginPath(); cx.moveTo(300, base + 220); cx.lineTo(500, base + 220);
+  cx.moveTo(580, base + 220); cx.lineTo(780, base + 220); cx.stroke();
+  cx.save(); cx.translate(540, base + 220); cx.rotate(Math.PI/4);
   cx.fillStyle = C.brass; cx.fillRect(-5, -5, 10, 10); cx.restore();
 
   $("plate-empty").style.display = shot ? "none" : "flex";
