@@ -727,11 +727,11 @@ function hideAll(){
 /* Phase one — the clock, on every day */
 function showClock(){
   hideAll();
-  $("clock-lock").classList.remove("hide");
+  if (DEV.on) $("clock-lock").classList.remove("hide");
   $("lock-title").textContent = "Doors Closed";
   $("lock-note").textContent = hasRitual()
-    ? "Not time yet. Come back later — and today there's one more thing after the clock."
-    : "Not time yet. Come back later — it opens at an hour neither of you chose, the same minute for both of you.";
+    ? "Check back later today — and there's one more thing after the door."
+    : "Check back later today.";
   $("hero-sub").textContent = "One prompt a day, at an hour neither of you picks.";
   document.title = "Doors closed — Side Quests II";
 }
