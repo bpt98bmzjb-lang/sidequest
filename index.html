@@ -147,40 +147,26 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:3;opac
 
 /* 5. Radar Gate (Day 5) */
 .radargate{position:relative;width:220px;height:220px;margin:10px 0;cursor:pointer}
-.radargate svg{width:100%;height:100%}
-.radargate .rim{fill:none;stroke:var(--edge);stroke-width:1.5}
-.radargate .center-target{fill:none;stroke:var(--crimson-dim);stroke-width:1.5}
-.radargate .sweep{stroke:var(--crimson);stroke-width:1.5;transform-origin:110px 110px}
-.radargate .radar-dot{fill:var(--crimson);transition:all .2s ease}
-.radar-count{font-family:var(--display);font-size:16px;color:var(--crimson);margin-top:8px}
+.ritual-guide{font-family:var(--body);font-size:13.5px;font-style:italic;color:var(--smoke);max-width:36ch;margin:8px auto 20px;line-height:1.55}
 
-/* 6. Zoom Gate (Day 6) */
-.zoomgate{display:flex;flex-direction:column;align-items:center;gap:16px;margin:15px 0}
-.zoom-viewport{width:180px;height:180px;border:1px solid var(--edge);border-radius:50%;overflow:hidden;
-  position:relative;display:flex;align-items:center;justify-content:center;background:var(--velvet)}
-.zoom-world{font-size:64px;transition:transform .1s linear}
-.zoom-label{font-family:var(--deco);font-size:10px;letter-spacing:.2em;color:var(--smoke)}
+/* 5. Kindness Ripple (Day 5) */
+.radargate{position:relative;width:240px;height:180px;margin:10px 0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ripple-container{position:relative;width:100%;height:140px;border:1px solid var(--edge);border-radius:12px;background:var(--velvet);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.warmth-orb{position:absolute;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.05);border:1px solid var(--edge);transition:all .5s cubic-bezier(.2,.7,.3,1)}
+.warmth-orb.orb1{top:20px;left:30px}
+.warmth-orb.orb2{bottom:20px;right:30px}
+.warmth-orb.main-orb{width:64px;height:64px;background:var(--crimson);border-color:var(--crimson);box-shadow:0 0 20px var(--crimson);cursor:pointer;display:flex;align-items:center;justify-content:center;text-align:center;animation:pulse 2s infinite}
+.warmth-orb.main-orb span{font-family:var(--deco);font-size:9px;letter-spacing:.12em;color:var(--lacquer);font-weight:600}
+.warmth-orb.lit{background:rgba(196,57,79,.35);border-color:var(--crimson);box-shadow:0 0 15px rgba(196,57,79,.5)}
+.radar-count{font-family:var(--deco);font-size:10.5px;letter-spacing:.2em;color:var(--crimson-dim);margin-top:12px;text-transform:uppercase}
 
-/* 7. One Percent Gate (Day 7) */
-.onepercentgate{width:min(280px,80vw);margin:20px 0;display:flex;flex-direction:column;align-items:center;gap:12px}
-.percent-track{position:relative;width:100%;height:36px;border:1px solid var(--edge);background:rgba(255,255,255,.015);border-radius:4px;touch-action:none}
-.percent-target{position:absolute;left:1%;top:0;bottom:0;width:12px;background:rgba(196,57,79,.3);border:1px solid var(--crimson);border-radius:2px}
-.percent-handle{position:absolute;left:0;top:2px;bottom:2px;width:24px;background:var(--crimson);border-radius:3px;cursor:grab}
-.percent-val{font-family:var(--display);font-size:24px;color:var(--pearl)}
-.percent-word{font-family:var(--deco);font-size:10px;letter-spacing:.2em;color:var(--crimson-dim)}
-
-/* 8. Paths Gate (Day 8) */
-.pathsgate{margin:20px 0}
-.paths-list{display:flex;flex-direction:column;gap:10px;width:220px}
-@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
-
-/* 9. Letter Gate (Day 9) */
+/* 9. Wax Seal Envelope (Day 9) */
 .lettergate{display:flex;flex-direction:column;align-items:center;margin:15px 0}
-.letter-box{display:flex;gap:8px}
-.letter-ring{width:70px;height:70px;border:1px solid var(--edge);background:var(--panel);border-radius:8px;
-  display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:var(--deco);font-size:11px;
-  letter-spacing:.15em;color:var(--pearl);user-select:none;transition:border-color .2s}
-.letter-ring:active{border-color:var(--crimson)}
+.envelope-card{width:220px;height:140px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;cursor:pointer;position:relative;user-select:none;touch-action:none}
+.wax-stamp{width:54px;height:54px;background:var(--crimson);border-radius:50%;box-shadow:0 0 20px rgba(196,57,79,.6);display:flex;align-items:center;justify-content:center;transition:transform .3s, background .3s}
+.wax-stamp:active{transform:scale(0.9)}
+.wax-icon{width:26px;height:26px;color:var(--lacquer)}
+.wax-label{font-family:var(--deco);font-size:10px;letter-spacing:.2em;color:var(--crimson-dim);text-transform:uppercase}
 
 /* 10. Save Gate (Day 10) */
 .savegate{display:flex;flex-direction:column;align-items:center;gap:16px;margin:15px 0}
@@ -373,6 +359,7 @@ footer{border-top:1px solid var(--edge);padding:28px 0 calc(58px + env(safe-area
 <!-- CLOSED -->
 <section class="locked hide" id="locked">
   <h2 id="lock-title">Doors Closed</h2>
+  <p class="ritual-guide" id="ritual-guide"></p>
 
   <div class="clock" id="clock-lock">--<span class="u">h</span>--<span class="u">m</span>--<span class="u">s</span></div>
 
@@ -417,15 +404,14 @@ footer{border-top:1px solid var(--edge);padding:28px 0 calc(58px + env(safe-area
     </div>
   </div>
 
-  <!-- 5. Radar Gate -->
+  <!-- 5. Kindness Ripple (Day 5) -->
   <div class="radargate hide" id="radargate">
-    <svg viewBox="0 0 220 220" aria-hidden="true">
-      <circle class="rim" cx="110" cy="110" r="90"/>
-      <circle class="center-target" cx="110" cy="110" r="24"/>
-      <line class="sweep" id="radar-sweep" x1="110" y1="110" x2="110" y2="20"/>
-      <circle class="radar-dot" id="radar-dot" cx="110" cy="50" r="8"/>
-    </svg>
-    <div class="radar-count" id="radar-count">0 / 3</div>
+    <div class="ripple-container" id="ripple-container">
+      <div class="warmth-orb orb1" id="orb1"></div>
+      <div class="warmth-orb orb2" id="orb2"></div>
+      <div class="warmth-orb main-orb" id="main-orb"><span>TOUCH WARMTH</span></div>
+    </div>
+    <div class="radar-count" id="radar-count">Tap warmth to trigger ripple</div>
   </div>
 
   <!-- 6. Zoom Gate -->
@@ -454,12 +440,13 @@ footer{border-top:1px solid var(--edge);padding:28px 0 calc(58px + env(safe-area
     </div>
   </div>
 
-  <!-- 9. Letter Gate -->
+  <!-- 9. Wax Seal Envelope (Day 9) -->
   <div class="lettergate hide" id="lettergate">
-    <div class="letter-box">
-      <div class="letter-ring liquid-glass" id="ring1"><span>SAY</span></div>
-      <div class="letter-ring liquid-glass" id="ring2"><span>SHOW</span></div>
-      <div class="letter-ring liquid-glass" id="ring3"><span>KEEP</span></div>
+    <div class="envelope-card liquid-glass" id="envelope-card">
+      <div class="wax-stamp" id="wax-stamp">
+        <svg viewBox="0 0 40 40" class="wax-icon"><path d="M20 28s-7-4.5-7-9a4 4 0 0 1 7-2.4A4 4 0 0 1 27 19c0 4.5-7 9-7 9z" fill="currentColor"/></svg>
+      </div>
+      <span class="wax-label" id="wax-label">Rub wax seal to melt</span>
     </div>
   </div>
 
@@ -866,12 +853,27 @@ function showClock(){
 
 /* ══ 11 Entrance Mini-Games Implementations ══ */
 
+const GUIDES = {
+  charge: "Hold to pause and restore your energy before stepping forward.",
+  wipe: "Wipe away the noise to notice what has been standing right in front of you.",
+  listen: "Close your eyes or listen closely — stay anchored in the present sound.",
+  doors: "Choose a doorway into a version of yourself you used to live.",
+  radar: "Tap the glowing warmth to watch kindness ripple outwards.",
+  zoom: "Hold to zoom out and remember the vast world outside yourself.",
+  onepercent: "Drag with care — small, steady progress is more than enough.",
+  paths: "Step off the familiar track and choose the road less taken.",
+  letter: "Rub the wax seal to melt what has been quietly kept inside.",
+  save: "Collect a star to save a quiet discovery for a future together.",
+  capsule: "Seal a glowing spark of today to send to yourself one year from now."
+};
+
 function showRitual(){
   if (!hasRitual()){ unlock(); return; }
   hideAll();
   $("lock-title").textContent = p.tail;
   $("lock-note").textContent = "The hour has come. Complete the ritual to enter.";
   $("hero-sub").textContent = p.open;
+  $("ritual-guide").textContent = GUIDES[ritual] || "";
   document.title = p.code + " — Side Quests III";
 
   if (ritual === "charge") startCharge();
@@ -983,27 +985,18 @@ function startDoors(){
   });
 }
 
-/* 5. Radar Ritual */
+/* 5. Kindness Ripple (Day 5) */
 function startRadar(){
   $("radargate").classList.remove("hide");
-  let count = 0, angle = 0;
-  const sweep = $("radar-sweep"), gate = $("radargate");
-  const anim = setInterval(() => {
-    angle = (angle + 5) % 360;
-    sweep.setAttribute("transform", `rotate(${angle} 110 110)`);
-  }, 25);
-  gate.onclick = () => {
-    if (angle >= 150 && angle <= 210){
-      count++;
-      $("radar-count").textContent = count + " / 3";
-      gate.style.transform = "scale(1.06)";
-      setTimeout(() => gate.style.transform = "scale(1)", 150);
-      if (count >= 3){
-        clearInterval(anim);
-        $("radar-count").textContent = "KINDNESS DETECTED";
-        setTimeout(() => unlock(), 500);
-      }
-    }
+  const main = $("main-orb"), o1 = $("orb1"), o2 = $("orb2"), lbl = $("radar-count");
+  main.onclick = () => {
+    o1.classList.add("lit");
+    o2.classList.add("lit");
+    main.style.transform = "scale(1.25)";
+    main.style.boxShadow = "0 0 35px var(--crimson)";
+    lbl.textContent = "Kindness rippled outwards";
+    lbl.style.color = "var(--pearl)";
+    setTimeout(() => unlock(), 750);
   };
 }
 
@@ -1074,21 +1067,21 @@ function startPaths(){
   });
 }
 
-/* 9. Letter Ritual */
+/* 9. Wax Seal Envelope (Day 9) */
 function startLetter(){
   $("lettergate").classList.remove("hide");
-  const words = [["SAY", "SPEAK", "VOICE"], ["SHOW", "GIVE", "SHARE"], ["KEEP", "HOLD", "TRUST"]];
-  const state = [0, 0, 0];
-  document.querySelectorAll(".letter-ring").forEach((ring, i) => {
-    ring.onclick = () => {
-      state[i] = (state[i] + 1) % 3;
-      ring.innerHTML = `<span>${words[i][state[i]]}</span>`;
-      ring.style.borderColor = "var(--crimson)";
-      ring.style.transform = "scale(1.08)";
-      setTimeout(() => ring.style.transform = "scale(1)", 150);
-      setTimeout(() => unlock(), 700);
-    };
-  });
+  const card = $("envelope-card"), stamp = $("wax-stamp"), lbl = $("wax-label");
+  const melt = () => {
+    stamp.style.transform = "scale(0.3) rotate(45deg)";
+    stamp.style.opacity = "0";
+    card.style.borderColor = "var(--crimson)";
+    card.style.boxShadow = "0 0 30px rgba(196,57,79,.6)";
+    lbl.textContent = "WAX SEAL MELTED — OPENING...";
+    lbl.style.color = "var(--pearl)";
+    setTimeout(() => unlock(), 750);
+  };
+  card.onclick = melt;
+  card.onpointermove = e => { if (e.buttons > 0) melt(); };
 }
 
 /* 10. Save Ritual */
